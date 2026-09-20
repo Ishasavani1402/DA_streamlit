@@ -120,15 +120,17 @@ if uploaded_file is not None:
         city_sale = df.groupby('City')['revenue'].sum().sort_values(ascending=False)
 
         st.markdown("<br>", unsafe_allow_html=True)
-        st.dataframe(city_sale, use_container_width=True)
+        # st.dataframe(city_sale, use_container_width=True)
+        st.bar_chart(city_sale)
 
     elif menu == 'Category Revenue':
             category_sale = df.groupby('Category').agg(
              total_sale = ('revenue','sum') , 
              total_product = ('Product' , 'nunique')    
-            )
+            ).sort_values(by='total_sale' , ascending=False)
             st.markdown("<br>", unsafe_allow_html=True)
-            st.dataframe(category_sale, use_container_width=True)
+            # st.dataframe(category_sale, use_container_width=True)
+            st.bar_chart(category_sale)
 
     elif menu == 'Best Product':
         best_product =df.groupby('Product')[['Quantity' , 'revenue']].sum().reset_index()
@@ -157,7 +159,8 @@ if uploaded_file is not None:
             </p>
             """, unsafe_allow_html=True)
          daily_revenue = df.groupby('Date')['revenue'].sum()
-         st.dataframe(daily_revenue , use_container_width=True)
+        #  st.dataframe(daily_revenue , use_container_width=True)
+         st.line_chart(daily_revenue)
 
     elif menu == "Filters":
 
