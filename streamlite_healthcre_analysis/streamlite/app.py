@@ -4,13 +4,37 @@ from streamlit_option_menu import option_menu
 from csv_to_mysql import create_connection
 import queries
 import matplotlib.pyplot as plt
-import seaborn as sns
-
+from pathlib import Path 
 
 
 # page configuration
 st.set_page_config(page_title='healthcare analysis' , layout='wide')
-st.title('💉 Healthcare analysis System')
+
+# ---------- helper functions ----------
+def load_css(file_name):
+    css_path = Path(__file__).parent / file_name
+    with open(css_path, encoding="utf-8") as f:
+        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+
+
+def kpi_card(column, label, value):
+    column.markdown(f"""
+        <div class="kpi-card">
+            <div class="kpi-label">{label}</div>
+            <div class="kpi-value">{value}</div>
+        </div>
+    """, unsafe_allow_html=True)
+
+
+load_css("style.css")
+
+# # head part
+st.markdown("""
+<h2 style="margin-bottom:0;">💉 Healthcare Analysis System</h2>
+<p style="color:gray; margin-top:0; margin-bottom:10px;">
+</p>
+""", unsafe_allow_html=True)
+
 
 with st.sidebar:
     st.sidebar.title("📌 Navigation")
@@ -23,7 +47,6 @@ with st.sidebar:
             'doctor analysis',
             'hospital analysis',
             'seasonal analysis',
-            'pivot table'
         ],
         index=0
     )
@@ -32,21 +55,58 @@ with st.sidebar:
 conn = create_connection()
 
 if menu == 'Overview':
-    st.subheader("📊 Overview")
     st.header("📌 Key Business Metrics")
      # 🔥 KPI CARDS
 
-    col1, col2, col3, col4 = st.columns(4)
+    # col1, col2, col3, col4 = st.columns(4)
 
     patient = pd.read_sql(queries.total_patient, conn)
     hospital = pd.read_sql_query(queries.total_hospital , conn)
     doctor = pd.read_sql_query(queries.total_doctor , conn)
-    admit_day  = pd.read_sql_query(queries.avg_admit_days , conn)
+    total_revenue  = pd.read_sql_query(queries.total_revenue , conn)
 
-    col1.metric("Total Patient", f"{int(patient.iloc[0,0])}")
-    col2.metric("Total Hospital", int(hospital.iloc[0,0]))
-    col3.metric("Total doctor", int(doctor.iloc[0,0]))
-    col4.metric("Avg Admit Day", int(admit_day.iloc[0,0]))
+    k1,k2,k3 , k4 = st.columns(4)
+    kpi_card(k1, "Total Patients", f"{int(patient.iloc[0,0]):,}")
+    kpi_card(k2, "Total Hospitals", f"{int(hospital.iloc[0,0]):,}")
+    kpi_card(k3, "Total Doctors", f"{int(doctor.iloc[0,0]):,}")
+    kpi_card(k4, "Total Revenue", f"${int(total_revenue.iloc[0,0]):,}")
+
+# ---------- Row 2: charts ----------
+    st.markdown("---")
+    c1, c2 = st.columns(2)
+
+    with c1:
+        st.subheader("🚑 Admission Type wise total patient ")
+        adm = pd.read_sql_query(queries.admission_type_split, conn)
+        # st.dataframe(adm)
+        st.bar_chart(adm, x='admission_type', y='total_patient')
+
+    with c2:
+        st.subheader("🧪 Test Results wise total patient")
+        tr = pd.read_sql_query(queries.test_result_split, conn)
+        # st.dataframe(tr)
+        st.bar_chart(tr, x='test_results', y='total_patient')
+
+ # ---------- Smart Insights ----------
+    st.markdown("---")
+    st.subheader("🧠 Key Insights")
+
+    top_adm = adm.sort_values('total_patient', ascending=False).iloc[0]
+    adm_pct = round(top_adm['total_patient'] / adm['total_patient'].sum() * 100, 1)
+    st.info(f"🚑 Most patients come through **{top_adm['admission_type']}** admission ({adm_pct}%).")
+
+    abn = tr[tr['test_results'].str.lower() == 'abnormal']['total_patient'].sum()
+    abn_pct = round(abn / tr['total_patient'].sum() * 100, 1)
+    st.warning(f"🧪 {abn_pct}% of patients had abnormal test results.")
+
+    cond = pd.read_sql(queries.medical_condition, conn)
+    top_cond = cond.sort_values('avg_bill', ascending=False).iloc[0]
+    st.error(f"💰 Costliest condition on average: **{top_cond['medical_condition']}** (₹/$ {int(top_cond['avg_bill'])} per patient).")
+
+    st.markdown("---")
+    st.caption("🚀 healthcare analysis system | Built by Isha")
+
+
 
 elif menu == 'medical condition':
     st.subheader("Which medical condition has the highest average billing amount?")
@@ -54,19 +114,51 @@ elif menu == 'medical condition':
     st.dataframe(df)
 
     st.bar_chart(df , x = 'medical_condition' , y='avg_bill')
-    # plt.figure(figsize=(10,5))
-    # plt.bar(df['medical_condition'], df['avg_bill'], color='blue') 
-    # plt.xlabel("medical_condition")
-    # plt.ylabel("avg_bill")
-    # plt.title("medical condition analysis")
-    # st.pyplot(plt)
 
     # que 2
     st.markdown('-'*20)
     st.subheader('For each medical condition, which doctor treats the most patients?')
     df = pd.read_sql_query(queries.medical_condition_patient_treat , conn)
     st.dataframe(df)
-    
+
+    # Prepare data for chart
+    chart_data = df.pivot(
+    index='medical_condition',
+    columns='doctor_name',
+    values='total_patient'
+).fillna(0)
+    st.bar_chart(chart_data , use_container_width=True)
+
+    # qu 3
+    st.markdown('-'*20)
+    st.subheader('Which blood type shows the highest occurrence of each medical condition — any risk pattern worth flagging?')
+    df = pd.read_sql_query(queries.blood_type , conn)
+    st.dataframe(df , use_container_width=True)
+
+    # Prepare data for chart
+    chart_data = df.pivot(
+    index='medical_condition',
+    columns='blood_type',
+    values='total_record'
+).fillna(0)
+
+    st.bar_chart(chart_data , use_container_width=True)
+
+    # que 4
+    st.markdown('-'*20)
+    st.subheader('Top 3 most expensive medical conditions within each age_group')
+    df = pd.read_sql_query(queries.expensive_medical_condition , conn)
+    st.dataframe(df)
+
+    # Prepare data for chart
+    chart_data = df.pivot(
+    index='age_group',
+    columns='medical_condition',
+    values='total_bill'
+    ).fillna(0)
+
+    st.bar_chart(chart_data , use_container_width=True)
+
     st.markdown("---")
     st.caption("🚀 healthcare analysis system | Built by Isha")
 
@@ -76,12 +168,12 @@ elif menu == 'insurance provider':
     st.dataframe(df)
 
     st.bar_chart(df , x = 'insurance_provider' , y = 'total_revenue')
-    # plt.figure(figsize=(10,5))
-    # plt.bar(df['insurance_provider'], df['total_revenue'], color='blue') 
-    # plt.xlabel("insurance_provider")
-    # plt.ylabel("total_revenue")
-    # plt.title("insurance provider analysis")
-    # st.pyplot(plt)
+
+    # que 2
+    st.markdown('-'*20)
+    st.subheader(''' Insurance provider comparison: normal vs abnormal vs inconclusive test result rates''')
+    df = pd.read_sql_query(queries.insurance_provider_test_result , conn)
+    st.dataframe(df , use_container_width=True)
 
     st.markdown("---")
     st.caption("🚀 healthcare analysis system | Built by Isha")
@@ -92,12 +184,6 @@ elif menu == 'doctor analysis':
     st.dataframe(df)
 
     st.bar_chart(df , x = 'doctor_name' , y = 'total_patient')
-    # plt.figure(figsize=(10,5))
-    # plt.bar(df['doctor_name'], df['total_patient'], color='blue') 
-    # plt.xlabel("doctor_name")
-    # plt.ylabel("total_patient")
-    # plt.title("doctor analysis")
-    # st.pyplot(plt)
 
     st.markdown("---")
     st.caption("🚀 healthcare analysis system | Built by Isha")
@@ -106,6 +192,14 @@ elif menu == 'hospital analysis':
     st.subheader('''Which hospital's average billing is highest, and by how much does it exceed the overall average''')
     df = pd.read_sql_query(queries.hospital , conn)
     st.dataframe(df)
+
+    # que 2 
+    st.markdown('-'*20)
+    st.subheader('''Within each hospital, rank doctors by total billing generated — who's the top revenue doctor per hospital''')
+    df = pd.read_sql_query(queries.hospital_rank , conn)
+    st.dataframe(df)
+
+
 
     st.markdown("---")
     st.caption("🚀 healthcare analysis system | Built by Isha")
@@ -119,7 +213,7 @@ elif menu == 'seasonal analysis':
 
     st.markdown("---")
     st.caption("🚀 healthcare analysis system | Built by Isha")
-
+   
     
 
 
