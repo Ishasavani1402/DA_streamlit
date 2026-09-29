@@ -1,14 +1,12 @@
 import pandas as pd
 import streamlit as st
-from streamlit_option_menu import option_menu
 from csv_to_mysql import create_connection
 import queries
-import matplotlib.pyplot as plt
 from pathlib import Path 
 
 
 # page configuration
-st.set_page_config(page_title='healthcare analysis' , layout='wide')
+st.set_page_config(page_title='healthcare analysis' , layout='wide' , page_icon='💉')
 
 # ---------- helper functions ----------
 def load_css(file_name):
