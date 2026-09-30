@@ -3,8 +3,7 @@ import sys
 import pandas as pd
 import mysql.connector
 from mysql.connector import Error
-from dotenv import load_dotenv   
-
+from dotenv import load_dotenv       
 load_dotenv()
 
 
@@ -35,6 +34,19 @@ def get_mysql_type(col, dtype):
     ✅ Fix 3: Use DECIMAL(10,2) for financial/percentage columns
                instead of FLOAT — prevents silent rounding errors.
     """
+    decimal_cols = [
+        'layoff_percentage',
+        'revenue_growth_percent',
+        'salary_budget_change',
+        'stock_growth_percent',
+        'remote_jobs_percentage',
+        'ai_replacement_risk',
+        'ai_automation_impact',
+        'ai_adoption_level',
+        'employee_sentiment',
+        'job_security_score',
+    ]
+    if col in decimal_cols:        return "DECIMAL(10,2)"
     if "int"      in str(dtype):   return "INT"
     if "float"    in str(dtype):   return "FLOAT"
     if "datetime" in str(dtype):   return "DATETIME"
