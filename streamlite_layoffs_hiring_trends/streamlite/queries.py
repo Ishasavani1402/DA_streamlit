@@ -34,7 +34,28 @@ select * from open_role_sum where higest_open_role = 1;'''
 
 industry_layoff = '''select industry , sum(layoffs_count) as total_layoff from clean_dataset group by industry order by total_layoff desc'''
 
+country_layoff = '''select country , sum(layoffs_count) as total_layoff from clean_dataset group by country order by total_layoff desc'''
+
 industry_common_reason_layoff = '''with reson_count as (select industry , reason_for_layoffs , count(*) as layoff_record , 
 dense_rank() over(partition by industry order by count(*) desc) as rnk
 from clean_dataset group by industry , reason_for_layoffs)
 select * from reson_count where rnk = 1;'''
+
+company_size_layoff = '''select company_size , sum(layoffs_count) as total_layoff from clean_dataset group by company_size order by total_layoff desc'''
+
+hiring_trend_analysis = '''select hiring_trend , round(avg(open_roles) , 2) as avg_open_role from clean_dataset where hiring_trend in ('Moderate Hiring', 'Aggressive Hiring')
+group by hiring_trend'''
+
+hiring_role_analysis = '''select top_hiring_role , round(sum(open_roles) , 2) as total_open_role from clean_dataset group by top_hiring_role order by total_open_role desc'''
+
+market_condition_layoff = '''select market_condition , round(sum(layoffs_count) , 2) as total_layoff from clean_dataset group by market_condition order by total_layoff desc'''
+
+market_condition_hiring_trend = '''select market_condition , hiring_trend , round(sum(open_roles) , 2) as total_open_role from clean_dataset where hiring_trend in ('Aggressive Hiring', 'Moderate Hiring')group by market_condition , hiring_trend order by total_open_role desc'''
+
+ai_adoption_vs_layoff = ''' select case when ai_adoption_level < 3 then 'very low (0-2)' 
+when ai_adoption_level < 5 then 'low (3-4)' 
+when ai_adoption_level < 7 then 'moderate (5-6)'
+when ai_adoption_level < 9 then 'high (7-8)'
+else 'very high (9+)' end as ai_adoption_bucket , 
+round(avg(layoffs_count),2) as avg_layoff from clean_dataset group by ai_adoption_bucket order by avg_layoff desc ;
+'''

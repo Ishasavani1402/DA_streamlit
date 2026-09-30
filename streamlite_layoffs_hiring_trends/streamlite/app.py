@@ -34,8 +34,13 @@ st.markdown("""
 icons = {
     "Overview": "🔍 Overview",
     "Yearly Layoff Trend": "📉 Yearly Layoff Trend",
+    "Country Analysis": "🌍 Country Analysis",
     "Company Analysis": "🏢 Company Analysis",
-    "Industry Analysis": "🏭 Industry Analysis"
+    "Industry Analysis": "🏭 Industry Analysis",
+    "Hiring Trend Analysis": "🤝 Hiring Trend Analysis",
+    "Hiring Role Analysis": "💻 Hiring Role Analysis" , 
+    "Market Condition Analysis": "📊 Market Condition Analysis"
+
 }
 
 with st.sidebar:
@@ -63,6 +68,25 @@ if menu == "Overview":
     kpi_card(k2, "Overall Layoff (%)", f"{float(layoff_pct.iloc[0,0]):,} %")
     kpi_card(k3, "total company", f"{int(total_company.iloc[0,0]):,}")
     kpi_card(k4, "total industry", f"{int(total_industry.iloc[0,0]):,}")
+
+    st.divider()
+    
+    st.subheader('AI adoption vs layoffs')
+    df = pd.read_sql_query(queries.ai_adoption_vs_layoff , conn)
+    st.dataframe(df)
+    st.bar_chart(df , x='ai_adoption_bucket' , y='avg_layoff')
+
+    st.divider()
+    st.caption("🚀 Tech Layoff Hiring Trend system | Built by Isha")
+
+elif menu == 'Country Analysis':
+    st.subheader('country wise layoff distribution')
+    df = pd.read_sql_query(queries.country_layoff , conn)
+    st.dataframe(df)
+    st.bar_chart(df , x='country' , y='total_layoff')
+
+    st.divider()
+    st.caption("🚀 Tech Layoff Hiring Trend system | Built by Isha")
 
 elif menu =='Yearly Layoff Trend':
     st.subheader("1 . yearly layoff distribution"  , text_alignment='left')
@@ -103,8 +127,15 @@ elif menu == 'Company Analysis':
     columns='top_hiring_role',
     values='total_open_role'
     ).fillna(0)
-
     st.bar_chart(chart_data , horizontal=True)
+
+    st.divider()
+
+
+    st.subheader('3 . company size layoff') 
+    df = pd.read_sql_query(queries.company_size_layoff , conn)
+    st.dataframe(df)
+    st.bar_chart(df, x='company_size', y='total_layoff')
     
 
     st.divider()
@@ -127,6 +158,46 @@ elif menu == 'Industry Analysis':
     columns='reason_for_layoffs',
     values='layoff_record'
     ).fillna(0)
+    st.bar_chart(chart_data, use_container_width=True)
+
+    st.divider()
+    st.caption('🚀 Tech Layoff Hiring Trend system | Built by Isha')
+
+elif menu == 'Hiring Trend Analysis':
+    st.subheader('1 . hiring trend analysis moderate vs aggresive')
+    df = pd.read_sql_query(queries.hiring_trend_analysis , conn)
+    st.dataframe(df)
+    st.bar_chart(df , x='hiring_trend' , y='avg_open_role')
+
+    st.divider()
+    st.caption('🚀 Tech Layoff Hiring Trend system | Built by Isha')
+
+elif menu == 'Hiring Role Analysis':
+    st.subheader('1 . hiring role analysis by open roles')
+    df = pd.read_sql_query(queries.hiring_role_analysis , conn)
+    st.dataframe(df)
+    st.bar_chart(df , x='top_hiring_role' , y='total_open_role')
+
+    st.divider()
+    st.caption('🚀 Tech Layoff Hiring Trend system | Built by Isha')
+
+elif menu =='Market Condition Analysis':
+    st.subheader('1 . market condition wise layoff')
+    df = pd.read_sql_query(queries.market_condition_layoff , conn)
+    st.dataframe(df)
+    st.bar_chart(df , x='market_condition' , y='total_layoff')
+
+    st.divider()
+    st.subheader('2 . market condition vs hiring trend analysis')
+    df = pd.read_sql_query(queries.market_condition_hiring_trend , conn)
+    st.dataframe(df)
+   # Prepare data for chart
+    chart_data = df.pivot(
+    index='market_condition',
+    columns='hiring_trend',
+    values='total_open_role'
+    ).fillna(0)
+
     st.bar_chart(chart_data, use_container_width=True)
 
     st.divider()
