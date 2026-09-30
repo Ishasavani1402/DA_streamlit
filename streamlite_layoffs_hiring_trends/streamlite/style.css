@@ -1,43 +1,52 @@
 /* ---------- Page spacing ---------- */
+
 .block-container {
     padding-top: 2.2rem;
     padding-bottom: 1rem;
 }
 
-/* Reduce vertical gaps */
+
+/* ---------- Reduce vertical gaps ---------- */
+
 div[data-testid="stVerticalBlock"] > div {
     gap: 0.4rem;
 }
 
+
 /* ---------- Header ---------- */
+
 .app-title {
     margin-bottom: 0;
 }
 
-/* ---------- Navigation (radio as tabs) ---------- */
-div[role="radiogroup"] {
-    border-bottom: 1px solid #e0e0e0;
-    padding-bottom: 6px;
+
+/* ---------- Sidebar Navigation ---------- */
+
+section[data-testid="stSidebar"] div[role="radiogroup"] {
+    gap: 8px;
 }
 
-div[role="radiogroup"] label {
+
+/* Radio option */
+
+section[data-testid="stSidebar"] div[role="radiogroup"] label {
     font-size: 15px !important;
-    font-weight: 500;
-    margin-right: 30px !important;
+    font-weight: 500 !important;
+    margin: 0 !important;
+    padding: 8px 10px !important;
+    border-radius: 6px;
 }
 
-/* Hide radio circle */
-div[role="radiogroup"] input[type="radio"] {
-    display: none;
+
+/* Keep the radio button visible */
+
+section[data-testid="stSidebar"] div[role="radiogroup"] input[type="radio"] {
+    display: block;
 }
 
-/* Active tab underline */
-div[role="radiogroup"] input[type="radio"]:checked + div {
-    border-bottom: 2px solid currentColor;
-    padding-bottom: 4px;
-}
 
 /* ---------- KPI cards ---------- */
+
 .kpi-card {
     background-color: rgba(128, 128, 128, 0.08);
     border: 1px solid #e0e0e0;
