@@ -1,0 +1,65 @@
+/* ---------- Page spacing ---------- */
+
+.block-container {
+    padding-top: 2.2rem;
+    padding-bottom: 1rem;
+}
+
+
+/* ---------- Reduce vertical gaps ---------- */
+
+div[data-testid="stVerticalBlock"] > div {
+    gap: 0.4rem;
+}
+
+
+/* ---------- Header ---------- */
+
+.app-title {
+    margin-bottom: 0;
+}
+
+/* ---------- Sidebar Navigation ---------- */
+
+section[data-testid="stSidebar"] div[role="radiogroup"] {
+    gap: 8px;
+}
+
+
+/* Radio option */
+
+section[data-testid="stSidebar"] div[role="radiogroup"] label {
+    font-size: 15px !important;
+    font-weight: 500 !important;
+    margin: 0 !important;
+    padding: 8px 10px !important;
+    border-radius: 6px;
+}
+
+
+/* Keep the radio button visible */
+
+section[data-testid="stSidebar"] div[role="radiogroup"] input[type="radio"] {
+    display: block;
+}
+
+
+/* ---------- KPI cards ---------- */
+
+.kpi-card {
+    background-color: rgba(128, 128, 128, 0.08);
+    border: 1px solid #e0e0e0;
+    padding: 12px;
+    border-radius: 6px;
+    text-align: center;
+}
+
+.kpi-label {
+    font-size: 14px;
+    color: gray;
+}
+
+.kpi-value {
+    font-size: 22px;
+    font-weight: 600;
+}
