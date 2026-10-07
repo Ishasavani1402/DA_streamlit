@@ -8,7 +8,7 @@ st.set_page_config(page_title='sales analysis' , layout='wide')
 st.markdown("""
 <style>
 .block-container {
-    padding-top: 1.2rem;
+    padding-top: 1.9rem;
     padding-bottom: 1rem;
 }
 
