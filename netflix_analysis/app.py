@@ -1,11 +1,12 @@
 import pandas as pd
 import streamlit as st
-from streamlit_option_menu import option_menu
 from streamlite.home import home
 from streamlite.rating import rating_distribution
 from streamlite.tv_movies import tv_movie
-
-
+from streamlite.director import director
+from streamlite.yearly_analysis import yearly_content
+from streamlite.country import country
+from streamlite.geners import geners
 # page configuration
 st.set_page_config(page_title='Netflix Content Analysis' , layout='wide')
 
@@ -87,9 +88,17 @@ if uploaded_file is not None:
         home(df)
 
     elif menu == 'Tv / Movies Analysis':
-            tv_movie(df)
+        tv_movie(df)
     elif menu =="Rating Analysis":
-            rating_distribution()
+        rating_distribution(df)
+    elif menu == "Director Analysis":
+        director(df) 
+    elif menu == 'yearly analysis':
+        yearly_content(df)
+    elif menu == 'Country Analysis':
+        country(df)
+    elif menu == 'Gener':
+        geners(df)
 
-else : 
+else :  
      st.info('upload csv file for view analysis')

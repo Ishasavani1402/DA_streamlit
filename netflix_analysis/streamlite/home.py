@@ -1,19 +1,12 @@
 import streamlit as st
 import matplotlib.pyplot as plt
 import seaborn as sns
-
+from plotly import express as px
 def home(df):
-    total_genere = df['primary_genre'].nunique()
-    st.write(f'total genere avalilable {total_genere}')
-
+    total_genres = df['primary_genre'].nunique()
     avg_duration = df['duration_min'].mean()
-    st.write(f'avg duration min {avg_duration.round(2)} min')
-
     total_movies = (df["category"] == "Movie").sum()
-    st.write(f"Total Movies: {total_movies:,}")
-
     total_tv_shows = (df["category"] == "TV Show").sum()
-    st.write(f"Total TV Shows: {total_tv_shows:,}")
 
     k1,k2,k3 , k4= st.columns(4)
     card_style = """
@@ -25,8 +18,8 @@ def home(df):
             """
     k1.markdown(f"""
             <div style="{card_style}">
-                <div style="font-size:14px; color:gray;">Total Gener</div>
-                <div style="font-size:22px; font-weight:600;">{total_genere}</div>
+                <div style="font-size:14px; color:gray;">Total Genres</div>
+                <div style="font-size:22px; font-weight:600;">{total_genres}</div>
             </div>
             """, unsafe_allow_html=True)
     
@@ -58,18 +51,7 @@ def home(df):
     movie_durations = movies['duration_min']
 
     # ==============================
-    # 1. Basic Statistics (Typical Length)
-    # ==============================
-    st.write("-" * 35)
-    st.write(f"Mean Duration     : {movie_durations.mean():.1f} minutes")
-    st.write(f"Median Duration   : {movie_durations.median():.1f} minutes")
-    st.write(f"Mode Duration     : {movie_durations.mode().values[0]:.0f} minutes")
-    st.write(f"Minimum Duration  : {movie_durations.min():.0f} minutes")
-    st.write(f"Maximum Duration  : {movie_durations.max():.0f} minutes")
-    st.write(f"Standard Deviation: {movie_durations.std():.1f} minutes")
-
-    # ==============================
-    # 2. Distribution Visualization
+    # 1. Distribution Visualization
     # ==============================
     plt.figure(figsize=(12, 6))
 
@@ -85,4 +67,37 @@ def home(df):
     plt.legend()
     plt.grid(axis='y', alpha=0.3)
     plt.tight_layout()
-    plt.show()
+    st.pyplot(plt)
+    plt.close()
+
+    # ==============================
+    # 2. Basic Statistics (Typical Length)
+    # ==============================
+    st.write(f"Mean Duration     : {movie_durations.mean():.1f} minutes")
+    st.write(f"Median Duration   : {movie_durations.median():.1f} minutes")
+    st.write(f"Mode Duration     : {movie_durations.mode().values[0]:.0f} minutes")
+    st.write(f"Minimum Duration  : {movie_durations.min():.0f} minutes")
+    st.write(f"Maximum Duration  : {movie_durations.max():.0f} minutes")
+    st.write(f"Standard Deviation: {movie_durations.std():.1f} minutes")
+
+    st.divider()
+    st.subheader('Who are the top 10 most frequent actors')
+
+        # Split the cast column and explode it
+    actors = (
+        df[df['cast'] != 'Unknown']['cast']
+        .str.split(', ')                   # split by comma + space
+        .explode()                         # one actor per row
+    )
+
+    # Count frequency of each actor
+    top_10_actors = (
+        actors
+        .value_counts()
+        .head(10)
+        .reset_index()
+    )
+    top_10_actors.columns = ['Actor', 'Number of Appearances']
+    st.dataframe(top_10_actors)
+    fig = px.bar(top_10_actors, x='Actor', y='Number of Appearances')
+    st.plotly_chart(fig)
