@@ -1,6 +1,6 @@
 import streamlit as st
-from .db import run
-from . import queries
+from db import run
+from streamlite import queries
 import plotly.express as px
 
 def kpi_card(column, label, value):
@@ -35,7 +35,7 @@ def overview():
     df = run(queries.ai_adoption_vs_layoff)
     st.dataframe(df)
     fig = px.bar(df.sort_values("avg_layoff" , ascending=False), x="ai_adoption_bucket", y="avg_layoff", orientation="v")
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig)
 
     footer()
 

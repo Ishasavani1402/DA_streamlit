@@ -5,7 +5,7 @@ from pathlib import Path
 from sqlalchemy import create_engine, text
 from sqlalchemy.pool import StaticPool
 
-CSV = Path(__file__).parent.parent / "dataset" / "clean_sales.csv"
+CSV = Path(__file__).parent / "dataset" / "clean_sales.csv"
 
 @st.cache_resource
 def get_engine():

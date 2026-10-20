@@ -1,6 +1,6 @@
 import streamlit as st
 from pathlib import Path 
-# from streamlite import navigation
+from  streamlite import navigation_function
 
 # page configuration
 st.set_page_config(page_title="Wallmart Analysis" , layout="wide" , page_icon="🛒")
@@ -11,7 +11,7 @@ def load_css(file_name):
         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
 
-load_css("streamlit\\style.css")
+load_css("streamlite\\style.css")
 
 # header
 st.markdown("""
@@ -19,3 +19,20 @@ st.markdown("""
 <p style="color:gray; margin-top:0; margin-bottom:10px;">
 </p>
 """, unsafe_allow_html=True)
+
+icons = {
+    "Overview": "🔍 Overview",
+
+}
+
+with st.sidebar:
+    st.sidebar.title("📌 Navigation")
+    menu = st.radio(
+        "Select Analysis",
+        options=list(icons.keys()),
+        format_func=lambda x: icons[x],
+        index=0
+    )
+
+if menu == "Overview":
+    navigation_function.overview()
