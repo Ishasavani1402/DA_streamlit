@@ -1,6 +1,6 @@
 import streamlit as st
 from pathlib import Path 
-import navigation
+from streamlite import navigation
 
 # page configuration
 st.set_page_config(page_title="Tech Layoff Hiring Trends" , layout="wide" , page_icon="💻")
@@ -11,7 +11,7 @@ def load_css(file_name):
         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
 
-load_css("style.css")
+load_css("streamlite\\style.css")
 
 # # head part
 st.markdown("""

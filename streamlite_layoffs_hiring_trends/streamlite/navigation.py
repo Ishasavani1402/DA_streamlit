@@ -1,6 +1,6 @@
 import streamlit as st
-from db import run
-import queries
+from .db import run
+from . import queries
 import plotly.express as px
 
 def kpi_card(column, label, value):
