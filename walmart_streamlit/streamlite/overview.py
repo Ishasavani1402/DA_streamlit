@@ -1,19 +1,8 @@
 import streamlit as st
 from db import run
 from . import queries
-import plotly.express as px
+from .helpers import kpi_card, footer
 
-def kpi_card(column, label, value):
-    column.markdown(f"""
-        <div class="kpi-card">
-            <div class="kpi-label">{label}</div>
-            <div class="kpi-value">{value}</div>
-        </div>
-    """, unsafe_allow_html=True)
-
-def footer():
-    st.divider()
-    st.caption("🚀 wallmart analysis | Built by Isha")
 
 def overview():
     st.header("📌 Key Business Metrics")
@@ -32,6 +21,7 @@ def overview():
     kpi_card(k5, "total profit", f"{int(total_profit.iloc[0,0]):,}")
 
     st.divider()
-    
+
 
     footer()
+

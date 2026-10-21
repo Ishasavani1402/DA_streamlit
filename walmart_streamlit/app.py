@@ -1,6 +1,7 @@
 import streamlit as st
 from pathlib import Path 
-from  streamlite import navigation_function
+from  streamlite.overview import overview
+from streamlite.sales_analysis import sales_analysis
 
 # page configuration
 st.set_page_config(page_title="Wallmart Analysis" , layout="wide" , page_icon="🛒")
@@ -20,8 +21,11 @@ st.markdown("""
 </p>
 """, unsafe_allow_html=True)
 
+
+
 icons = {
     "Overview": "🔍 Overview",
+    "sales analysis" : "📊 Sales Analysis"
 
 }
 
@@ -35,4 +39,6 @@ with st.sidebar:
     )
 
 if menu == "Overview":
-    navigation_function.overview()
+    overview()
+elif menu == "sales analysis":
+    sales_analysis()
