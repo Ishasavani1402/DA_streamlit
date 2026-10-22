@@ -2,7 +2,8 @@ import streamlit as st
 from pathlib import Path 
 from  streamlite.overview import overview
 from streamlite.sales_analysis import sales_analysis
-
+from streamlite.customer_type import custtomer_type
+from streamlite.time_series_analysis import monthly_sale
 # page configuration
 st.set_page_config(page_title="Wallmart Analysis" , layout="wide" , page_icon="🛒")
 
@@ -25,7 +26,9 @@ st.markdown("""
 
 icons = {
     "Overview": "🔍 Overview",
-    "sales analysis" : "📊 Sales Analysis"
+    "sales analysis" : "📊 Sales Analysis",
+    "customer type distribuution" : "👥 Customer Type Distribution",
+    "time series analysis" : "📈 Time Series Analysis",
 
 }
 
@@ -42,3 +45,7 @@ if menu == "Overview":
     overview()
 elif menu == "sales analysis":
     sales_analysis()
+elif menu == "customer type distribuution":
+    custtomer_type()
+elif menu == 'time series analysis':
+    monthly_sale()

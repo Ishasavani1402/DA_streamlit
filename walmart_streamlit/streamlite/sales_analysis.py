@@ -9,7 +9,7 @@ def sales_analysis():
 
     category_sale = run(queries.category_sale)
 
-    st.dataframe(category_sale, use_container_width=True)
+    st.dataframe(category_sale)
 
     # Pie chart showing percentage of total sales
     fig = px.pie(
@@ -49,5 +49,23 @@ def sales_analysis():
 
     st.divider()
     st.subheader('3 . total sale by products')
+    product_sale = run(queries.product_sale)
+    st.dataframe(product_sale)
+    fig = px.bar(product_sale.sort_values('total_sale'),
+                     x='total_sale',
+                     y='product_name',
+                     orientation='h',
+                     barmode='relative')
+    st.plotly_chart(fig)
+
+    st.divider()
+    st.subheader('4 . total sale by city')
+    city_sale = run(queries.city_sale)
+    st.dataframe(city_sale)
+    fig = px.bar(city_sale,
+                        x='city',
+                        y='total_sale',
+                        barmode='relative')
+    st.plotly_chart(fig)
 
     footer()

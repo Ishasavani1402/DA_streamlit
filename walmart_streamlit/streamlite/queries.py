@@ -22,3 +22,22 @@ product_line_sale = '''select product_line , round(sum(total),2) as total_sale ,
 round(100.0 * sum(total) / sum(sum(total)) over() ,2) as pct_of_total_sale , 
 count(*) as total_record
 from clean_sales group by product_line order by total_sale desc;'''
+
+product_sale = '''select product_name , round(sum(total),2) as total_sale ,
+round(100.0 * sum(total) / sum(sum(total)) over() ,2) as pct_of_total_sale
+from clean_sales group by product_name order by total_sale desc;
+'''
+
+city_sale = '''select city , round(sum(total),2) as total_sale ,
+round(100.0 * sum(total) / sum(sum(total)) over() ,2) as pct_of_total_sale
+from clean_sales group by city order by total_sale desc;'''
+
+customer_type = '''select customer_type , count(case when gender = 'Male' then 1 end) as male,
+count(case when gender = 'Female' then 1 end) as female from clean_sales
+group by customer_type;'''
+
+monthly_sales = '''select month_no , round(sum(total),2) as total_sale
+from clean_sales group by month_no order by month_no;'''
+
+time_of_day = '''select time_of_day , round(sum(total),2) as total_sale 
+from clean_sales group by time_of_day order by total_sale desc;'''
