@@ -41,3 +41,14 @@ from clean_sales group by month_no order by month_no;'''
 
 time_of_day = '''select time_of_day , round(sum(total),2) as total_sale 
 from clean_sales group by time_of_day order by total_sale desc;'''
+
+payment_analysis = '''select payment , count(*) as total_transactions , 
+round(sum(total),2) as total_sale
+from clean_sales
+group by payment order by total_sale desc;'''
+
+# --------- show dataset -----------
+dataset = """
+SELECT *
+FROM clean_sales;
+"""

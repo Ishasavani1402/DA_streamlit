@@ -21,7 +21,13 @@ def overview():
     kpi_card(k5, "total profit", f"{int(total_profit.iloc[0,0]):,}")
 
     st.divider()
+    df = run(queries.dataset)
 
+    st.dataframe(df, hide_index=True)
+
+    k1, k2 = st.columns(2)
+    kpi_card(k1 , "Total Rows", f"{df.shape[0]:,}")
+    kpi_card(k2 , "Total Columns", f"{df.shape[1]:,}")
 
     footer()
 

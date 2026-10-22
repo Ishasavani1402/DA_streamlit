@@ -29,3 +29,5 @@ def custtomer_type():
     )
 
     st.plotly_chart(fig)
+
+    footer()

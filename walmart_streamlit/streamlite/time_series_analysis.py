@@ -36,5 +36,7 @@ def monthly_sale():
         )
     st.plotly_chart(fig)
 
+    footer()
+
 
 
