@@ -12,9 +12,10 @@ def payment_analysis():
     st.dataframe(payment_df, use_container_width=True)
 
     fig = px.bar(
-        payment_df,
+        payment_df.melt(id_vars="payment", value_vars=["total_transactions", "total_sale"], var_name="variable", value_name="value"),
         x="payment",
-        y=["total_transactions", "total_sale"],
+        y="value",
+        color="variable",
         barmode="group",
         title="Payment Mode Wise Transactions and Sales",
         labels={

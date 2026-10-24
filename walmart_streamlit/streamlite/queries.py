@@ -1,5 +1,5 @@
 # -------------kpi -------------
-total_sale = '''select round(sum(total),2) as total_sales from clean_sales;'''
+total_sale = '''select round(sum(total),2) as total_clean_sales from clean_sales;'''
 
 total_qty = '''select round(sum(quantity),2) as total_qty from clean_sales;'''
 
