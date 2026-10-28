@@ -1,0 +1,109 @@
+/* ---------- Page spacing ---------- */
+
+.block-container {
+    padding-top: 2.2rem;
+    padding-bottom: 1rem;
+}
+
+
+/* ---------- Reduce vertical gaps ---------- */
+
+div[data-testid="stVerticalBlock"] > div {
+    gap: 0.4rem;
+}
+
+
+/* ---------- Header ---------- */
+
+.app-title {
+    margin-bottom: 0;
+}
+
+
+/* ---------- Sidebar Navigation ---------- */
+
+section[data-testid="stSidebar"] div[role="radiogroup"] {
+    gap: 8px;
+}
+
+
+/* Radio option */
+
+section[data-testid="stSidebar"] div[role="radiogroup"] label {
+    font-size: 15px !important;
+    font-weight: 500 !important;
+    margin: 0 !important;
+    padding: 8px 10px !important;
+    border-radius: 6px;
+}
+
+
+/* Keep the radio button visible */
+
+section[data-testid="stSidebar"] div[role="radiogroup"] input[type="radio"] {
+    display: block;
+}
+
+
+/* ---------- KPI cards ---------- */
+
+.kpi-card {
+    background-color: rgba(128, 128, 128, 0.08);
+    border: 1px solid #e0e0e0;
+    padding: 12px;
+    border-radius: 6px;
+    text-align: center;
+}
+
+.kpi-label {
+    font-size: 14px;
+    color: gray;
+}
+
+.kpi-value {
+    font-size: 22px;
+    font-weight: 600;
+}
+
+
+/* ---------- File Uploader ---------- */
+
+div[data-testid="stFileUploader"] {
+    background-color: rgba(128, 128, 128, 0.05);
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 12px;
+}
+
+/* Upload dropzone */
+div[data-testid="stFileUploaderDropzone"] {
+    background-color: transparent !important;
+    border: 2px dashed #b0b0b0 !important;
+    border-radius: 8px !important;
+    padding: 20px 12px !important;
+}
+
+/* Hover effect */
+div[data-testid="stFileUploaderDropzone"]:hover {
+    border-color: #4CAF50 !important;
+    background-color: rgba(76, 175, 80, 0.05) !important;
+}
+
+/* Browse files button */
+div[data-testid="stFileUploader"] button {
+    border-radius: 6px !important;
+    font-weight: 500 !important;
+}
+
+/* Uploaded file details */
+div[data-testid="stFileUploaderFile"] {
+    border: 1px solid #e0e0e0 !important;
+    border-radius: 6px !important;
+    padding: 8px !important;
+}
+
+/* File uploader label */
+div[data-testid="stFileUploader"] label {
+    font-weight: 600;
+    font-size: 15px;
+}

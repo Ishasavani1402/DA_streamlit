@@ -7,10 +7,6 @@ from streamlite.time_series_analysis import monthly_sale
 from streamlite.payment_analysis import payment_analysis
 from streamlite.sql_runner import sql_runner
 
-
-
-
-
 # page configuration
 st.set_page_config(page_title="Wallmart Analysis" , layout="wide" , page_icon="🛒")
 
