@@ -1,11 +1,12 @@
 import streamlit as st
 from pathlib import Path
-import pandas as pd
 from streamlit_.data_clean.data_clean import render_data_cleaning
-
+from streamlit_.EDA.EDA import render_eda   
+from streamlit_.EDA.sales_analysis import render_sales_analysis
+from streamlit_.EDA.AOV import render_aov
 # Page configuration
 st.set_page_config(
-    page_title="Mytra Sales Analysis",
+    page_title="Myntra Sales Analysis",
     layout="wide",
     page_icon="🛒"
 )
@@ -24,13 +25,16 @@ load_css("streamlit_/style.css")
 
 # Header
 st.markdown("""
-<h2 style="margin-bottom:0;">🛒 Mytra Sales Analysis</h2>
+<h2 style="margin-bottom:0;">🛒 Myntra Sales Analysis</h2>
 <p style="color:gray; margin-top:0; margin-bottom:10px;"></p>
 """, unsafe_allow_html=True)
 
 
 icons = {
     "Data Cleaning": "🧹 Data Cleaning",
+    "EDA": "📊 Exploratory Data Analysis",
+    "Sales Forecasting": "📈 Sales Forecasting",
+    "AOV" : "💰 Average Order Value",
 }
 
 with st.sidebar:
@@ -44,3 +48,10 @@ with st.sidebar:
 
 if menu == 'Data Cleaning':
     render_data_cleaning()
+elif menu == 'EDA':
+    render_eda()
+
+elif menu == 'Sales Forecasting':
+    render_sales_analysis()
+elif menu == 'AOV':
+    render_aov()
