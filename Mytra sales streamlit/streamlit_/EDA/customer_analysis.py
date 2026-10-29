@@ -69,3 +69,4 @@ def render_customer_analysis():
     payment_mode_customers(df)
     membership_tier_customers(df)
     order_chennel_customers(df)
+    footer()
