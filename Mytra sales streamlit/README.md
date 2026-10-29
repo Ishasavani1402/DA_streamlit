@@ -62,33 +62,33 @@ The data is a **Myntra e-commerce orders dataset** (8,000 orders, 2023–2025). 
 ## 📸 Screenshots
 
 ### 1. Data Cleaning — upload, clean, and review the report
-![Data Cleaning](docs/screenshots/01_data_cleaning.png)
+![Data Cleaning](screenshots/screenshots/data_clean.pdf)
 
 ### 2. Exploratory Data Analysis — summary statistics and correlation heatmap
-![EDA](docs/screenshots/02_eda.png)
+![EDA](screenshots/EDA.pdf)
 
 ### 3. Sales Analysis — revenue breakdowns with interactive charts
-![Sales Analysis](docs/screenshots/03_sales_analysis.png)
+![Sales Analysis](screenshots/sales_analysis.pdf)
 
 <details>
 <summary><b>More pages (click to expand)</b></summary>
 
 #### Average Order Value
-![AOV](docs/screenshots/04_aov.png)
+![AOV](screenshots/AOV.pdf)
 
 #### Order Analysis
-![Order Analysis](docs/screenshots/05_order_analysis.png)
+![Order Analysis](screenshots/order_analysis.pdf)
 
 #### Customer Analysis
-![Customer Analysis](docs/screenshots/06_customer_analysis.png)
+![Customer Analysis](screenshots/customer_analysis.pdf)
 
 #### Product Analysis
-![Product Analysis](docs/screenshots/07_product_analysis.png)
+![Product Analysis](screenshots/product_analysis.pdf)
 
 </details>
 
 ### 4. Custom Python Analysis — write your own code, get a table + CSV download
-![Custom Analysis](docs/screenshots/08_custom_analysis.png)
+![Custom Analysis](screenshots/custom_analysis.pdf)
 
 ---
 
@@ -236,7 +236,7 @@ Myntra sales streamlit/
 │   ├── Myntra_Sales_Dataset.csv  # Raw data (upload this on the Data Cleaning page)
 │   └── clean_dataset.csv         # Cleaned data (output of the pipeline)
 │
-├── docs/
+├── 
 │   └── screenshots/              # Images used in this README
 │
 └── streamlit_/
