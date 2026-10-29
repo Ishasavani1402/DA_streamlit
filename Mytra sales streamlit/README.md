@@ -62,7 +62,7 @@ The data is a **Myntra e-commerce orders dataset** (8,000 orders, 2023–2025). 
 ## 📸 Screenshots
 
 ### 1. Data Cleaning — upload, clean, and review the report
-![Data Cleaning](screenshots/screenshots/data_clean.pdf)
+![Data Cleaning](screenshots/data_clean.pdf)
 
 ### 2. Exploratory Data Analysis — summary statistics and correlation heatmap
 ![EDA](screenshots/EDA.pdf)
