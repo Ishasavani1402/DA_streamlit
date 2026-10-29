@@ -1,8 +1,7 @@
 import streamlit as st
-import plotly.express as px
 from streamlit_.helper import footer
 from streamlit_.helper import get_clean_df
-import numpy as np
+
 
 
 def product_analysis(df):

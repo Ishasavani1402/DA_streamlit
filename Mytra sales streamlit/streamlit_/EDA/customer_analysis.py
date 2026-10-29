@@ -2,7 +2,6 @@ import streamlit as st
 import plotly.express as px
 from streamlit_.helper import footer
 from streamlit_.helper import get_clean_df
-import numpy as np
 
 def payment_mode_customers(df):
     st.subheader('1 . total customer by use of payment mode')

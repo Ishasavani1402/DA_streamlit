@@ -7,7 +7,7 @@ from streamlit_.EDA.AOV import render_aov
 from streamlit_.EDA.order_analysis import render_orders
 from streamlit_.EDA.customer_analysis import render_customer_analysis
 from streamlit_.EDA.product_analysis import render_product_analysis
-
+from streamlit_.EDA.custome_analysis import render_custom_analysis
 # Page configuration
 st.set_page_config(
     page_title="Myntra Sales Analysis",
@@ -42,6 +42,7 @@ icons = {
     "Order Analysis" : "🛍️ Order Analysis",
     "customer Analysis" : "👥 Customer Analysis",
     "product Analysis" : "📦 Product Analysis" , 
+    "Custom Analysis" : "🧪 Custom Python Analysis",
 }
 
 with st.sidebar:
@@ -67,3 +68,5 @@ elif menu == 'customer Analysis':
     render_customer_analysis()
 elif menu == 'product Analysis':
     render_product_analysis()
+elif menu == 'Custom Analysis':
+    render_custom_analysis()
