@@ -321,16 +321,6 @@ plotly==6.6.0
 
 ---
 
-## 🔭 Limitations & Future Work
-
-- [ ] Add **true time-series forecasting** (the Sales page currently covers historical revenue breakdowns).
-- [ ] Add **sidebar filters** (year, category, state) that apply across all pages.
-- [ ] Add **cohort / repeat-customer and RFM segmentation** analysis.
-- [ ] **Persist cleaned data** across browser refreshes (e.g., cache to disk).
-- [ ] Add **unit tests** for the cleaning functions.
-- [ ] **Deploy** on Streamlit Community Cloud (with the Custom Analysis page disabled or password-protected).
-
----
 
 ## 👩‍💻 Author
 
