@@ -128,3 +128,4 @@ def render_sales_analysis():
     state_revenue(df)
     yerly_sales(df)
     order_chennal_revenue(df)
+    footer()

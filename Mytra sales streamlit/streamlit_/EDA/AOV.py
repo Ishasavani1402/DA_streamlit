@@ -1,5 +1,4 @@
 import streamlit as st
-import plotly.express as px
 from streamlit_.helper import footer
 from streamlit_.helper import get_clean_df
 
@@ -182,3 +181,4 @@ def render_aov():
     payment_mode_aov(df)
     order_chenal_aov(df)
     product_aov(df)
+    footer()

@@ -13,7 +13,6 @@ def kpi_card(col, label, value):
     )
 
 def footer():
-    st.divider()
     st.caption("🚀 Mytra sales analysis | built by Isha")
 
 def get_clean_df():
